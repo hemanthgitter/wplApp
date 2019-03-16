@@ -1,0 +1,19 @@
+{
+  "name": "wplapp",
+  "version": "1.0.0",
+  "description": "Web programming languages e-commerce app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hemanthgitter/wplApp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hemanthgitter/wplApp/issues"
+  },
+  "homepage": "https://github.com/hemanthgitter/wplApp#readme"
+}
