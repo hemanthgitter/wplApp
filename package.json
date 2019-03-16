@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/hemanthgitter/wplApp/issues"
   },
-  "homepage": "https://github.com/hemanthgitter/wplApp#readme"
+  "homepage": "https://github.com/hemanthgitter/wplApp#readme",
+  "dependencies": {
+    "concurrently": "^4.1.0"
+  }
 }
