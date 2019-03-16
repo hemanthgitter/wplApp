@@ -34,6 +34,6 @@ cd wplAPP && npm Install then,
 cd frontend && npm Install then,
 cd backend && npm Install
 
-# Be careful --- git commit and pull ---
+# Be careful --- git commit and push ---
 
 # Daily use - End ###########################
