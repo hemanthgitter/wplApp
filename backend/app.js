@@ -1,6 +1,22 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const app = express();
 
+//DB config
+const db = require('./config/keys').monngoURI;
+
+//Connect to mongoDB mlab
+mongoose
+    .connect(db, { useNewUrlParser: true })
+    .then(() => {
+        console.log("mongoDB connected");
+    })
+    .catch(err => {
+        console.log(err);
+        console.log("Failed to connect to mongoDB");
+    });
+
+//Routes
 app.get('/', (req, res) => {
     res.send('Hello world!!');
 });
