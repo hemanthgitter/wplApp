@@ -1,13 +1,15 @@
+require('dotenv').config();
+
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 
 //DB config
-const db = require('./config/keys').monngoURI;
+const mongoURI = process.env.MONGO_LOCAL_CONN_URL;
 
 //Connect to mongoDB mlab
 mongoose
-    .connect(db, { useNewUrlParser: true })
+    .connect(mongoURI, { useNewUrlParser: true })
     .then(() => {
         console.log("mongoDB connected");
     })
