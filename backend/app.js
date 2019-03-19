@@ -2,7 +2,16 @@ require('dotenv').config();
 
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const routes = require('./routes/index');
+
 const app = express();
+const router = express.Router();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 //DB config
 const mongoURI = process.env.MONGO_LOCAL_CONN_URL;
@@ -23,8 +32,10 @@ app.get('/', (req, res) => {
     res.send('Hello world!!');
 });
 
+app.use('/api/v1', routes(router));
+
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-    console.log('Backend server listening on port ${port}');
+    console.log('Backend server listening on port '+port);
 })
