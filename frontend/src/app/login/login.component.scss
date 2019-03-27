@@ -1,0 +1,12 @@
+#loginFormWrapper{
+    text-align: center;
+    #loginForm{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        .loginField{
+            width: 20em;
+        }
+    }
+}

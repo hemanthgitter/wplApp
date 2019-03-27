@@ -1,0 +1,12 @@
+#registerFormWrapper{
+    text-align: center;
+    #registerForm{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        .registerField{
+            width: 30em;
+        }
+    }
+}
