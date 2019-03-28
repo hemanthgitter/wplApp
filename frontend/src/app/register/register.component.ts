@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
+import { Validators } from '@angular/forms';
+import { ValidationService } from '../validation.service';
 
 @Component({
   selector: 'app-register',
@@ -7,19 +9,16 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
-
   hide = true;
-  registerForm = new FormGroup({
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
-    email: new FormControl(''),
-    password: new FormControl(''),
-    confirmPassword: new FormControl('')
+  registerForm = this.fb.group({
+	firstName: ['', [Validators.required]],
+	lastName: ['', [Validators.required]],
+	email: ['', [Validators.required, ValidationService.emailValidator]],
+	password: ['', [Validators.required, ValidationService.passwordValidator]],
+	confirmPassword: ['', [Validators.required, ValidationService.passwordValidator]],
   });
 
-  constructor() { }
+  constructor(private fb: FormBuilder) {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

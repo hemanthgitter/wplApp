@@ -10,25 +10,27 @@ import { LoginComponent } from './login/login.component';
 import { LandingComponent } from './landing/landing.component';
 import { RegisterComponent } from './register/register.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { ControlMessagesComponent } from './control-messages/control-messages.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    LoginComponent,
-    LandingComponent,
-    RegisterComponent,
-    NavbarComponent
+	AppComponent,
+	LoginComponent,
+	LandingComponent,
+	RegisterComponent,
+	NavbarComponent,
+	ControlMessagesComponent
   ],
   imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    ReactiveFormsModule,
-    AppRoutingModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule
+	BrowserModule,
+	BrowserAnimationsModule,
+	ReactiveFormsModule,
+	AppRoutingModule,
+	MatToolbarModule,
+	MatButtonModule,
+	MatFormFieldModule,
+	MatIconModule,
+	MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
