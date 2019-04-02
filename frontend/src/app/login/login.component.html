@@ -1,6 +1,6 @@
 <div id="loginFormWrapper">
 	<h1>Login</h1>
-	<form [formGroup]="loginForm" id="loginForm" (ngSumit)="loginSubmit()">
+	<form [formGroup]="loginForm" id="loginForm" (ngSubmit)="loginSubmit()">
 		<mat-form-field class="loginField">
 			<input matInput placeholder="Enter your email" formControlName="email" type="email" required>
 		</mat-form-field>

@@ -12,27 +12,41 @@ import { RegisterComponent } from './register/register.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { ControlMessagesComponent } from './control-messages/control-messages.component';
 
+import { AuthService } from './auth/auth.service';
+import { AuthGuard } from './auth/guards/auth.guard';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptor } from './jwt.interceptor';
+
 @NgModule({
   declarations: [
-	AppComponent,
-	LoginComponent,
-	LandingComponent,
-	RegisterComponent,
-	NavbarComponent,
-	ControlMessagesComponent
+		AppComponent,
+		LoginComponent,
+		LandingComponent,
+		RegisterComponent,
+		NavbarComponent,
+		ControlMessagesComponent
   ],
   imports: [
-	BrowserModule,
-	BrowserAnimationsModule,
-	ReactiveFormsModule,
-	AppRoutingModule,
-	MatToolbarModule,
-	MatButtonModule,
-	MatFormFieldModule,
-	MatIconModule,
-	MatInputModule
+		BrowserModule,
+		BrowserAnimationsModule,
+		ReactiveFormsModule,
+		HttpClientModule,
+		AppRoutingModule,
+		MatToolbarModule,
+		MatButtonModule,
+		MatFormFieldModule,
+		MatIconModule,
+		MatInputModule
   ],
-  providers: [],
+  providers: [
+		AuthService,
+		AuthGuard,
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: JwtInterceptor,
+			multi: true
+		}
+	],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

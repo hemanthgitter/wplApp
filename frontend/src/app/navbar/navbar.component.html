@@ -5,8 +5,9 @@
 			<a id="homebtn" mat-flat-button color="primary" [routerLink]="homeRoute">Home</a>
 		</div>
 		<div class="btnWrapper">
-			<button id="loginbtn" mat-flat-button color="primary" [routerLink]="loginRoute">Login</button>
-			<button id="registerbtn" mat-flat-button color="primary" [routerLink]="registerRoute">Register</button>
+			<button *ngIf="!currentUser" id="loginbtn" mat-flat-button color="primary" [routerLink]="loginRoute">Login</button>
+			<button *ngIf="!currentUser" id="registerbtn" mat-flat-button color="primary" [routerLink]="registerRoute">Register</button>
+			<button *ngIf="currentUser" id="registerbtn" mat-flat-button color="primary" (click)="logout()">Logout</button>
 		</div>
 		</mat-toolbar-row>
 	</mat-toolbar>

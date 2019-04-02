@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const routes = require('./routes/index');
 
+const cors = require('cors');
 const app = express();
 const router = express.Router();
 
@@ -26,6 +27,8 @@ mongoose
         console.log(err);
         console.log("Failed to connect to mongoDB");
     });
+
+app.use(cors());
 
 //Routes
 app.get('/', (req, res) => {
