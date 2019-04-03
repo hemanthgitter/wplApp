@@ -8,6 +8,7 @@
 			<button *ngIf="!currentUser" id="loginbtn" mat-flat-button color="primary" [routerLink]="loginRoute">Login</button>
 			<button *ngIf="!currentUser" id="registerbtn" mat-flat-button color="primary" [routerLink]="registerRoute">Register</button>
 			<button *ngIf="currentUser" id="registerbtn" mat-flat-button color="primary" (click)="logout()">Logout</button>
+			<button *ngIf="admin" id="registerbtn" mat-flat-button color="primary" [routerLink]="getAllUsersforAdmin">All Users</button>
 		</div>
 		</mat-toolbar-row>
 	</mat-toolbar>

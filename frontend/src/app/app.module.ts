@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { MatToolbarModule, MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material';
+import { MatToolbarModule, MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, MatTableModule } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -14,8 +14,8 @@ import { ControlMessagesComponent } from './control-messages/control-messages.co
 
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/guards/auth.guard';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { JwtInterceptor } from './jwt.interceptor';
+import { HttpClientModule } from '@angular/common/http';
+import { CookieModule } from 'ngx-cookie';
 
 @NgModule({
   declarations: [
@@ -31,21 +31,18 @@ import { JwtInterceptor } from './jwt.interceptor';
 		BrowserAnimationsModule,
 		ReactiveFormsModule,
 		HttpClientModule,
+		CookieModule.forRoot(),
 		AppRoutingModule,
 		MatToolbarModule,
 		MatButtonModule,
 		MatFormFieldModule,
 		MatIconModule,
-		MatInputModule
+		MatInputModule,
+		MatTableModule
   ],
   providers: [
 		AuthService,
-		AuthGuard,
-		{
-			provide: HTTP_INTERCEPTORS,
-			useClass: JwtInterceptor,
-			multi: true
-		}
+		AuthGuard
 	],
   bootstrap: [AppComponent]
 })

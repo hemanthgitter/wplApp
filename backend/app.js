@@ -3,16 +3,23 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const routes = require('./routes/index');
 
 const cors = require('cors');
 const app = express();
 const router = express.Router();
 
+mongoose.set('useNewUrlParser', true);
+mongoose.set('useFindAndModify', false);
+mongoose.set('useCreateIndex', true);
+
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+
 
 //DB config
 const mongoURI = process.env.MONGO_LOCAL_CONN_URL;
@@ -28,7 +35,10 @@ mongoose
         console.log("Failed to connect to mongoDB");
     });
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:4200',
+    credentials: true
+}));
 
 //Routes
 app.get('/', (req, res) => {

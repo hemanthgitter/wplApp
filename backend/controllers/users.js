@@ -35,23 +35,29 @@ module.exports = {
                     if(match){
                         let payload;
                         if(user.email === 'admin@gmail.com'){
-                            payload = { "user": user.email, "roles": ["admin"]};
+                            payload = {"user": user.email,"roles":["admin"]};
                         }else{
-                            payload = { "user": user.email, "roles": ["user"]};
+                            payload = {"user": user.email,"roles":["user"]};
                         }
                         const options = { "expiresIn": "2d"};
                         const secret = process.env.JWT_SECRET;
                         const token = jwt.sign(payload, secret, options);
 
-                        result.token = token;
+                        //result.token = token;
+                        payload["firstName"] = user.firstName;
+                        payload["lastName"] = user.lastName;
                         result.status = status;
-                        result.result = user;
+                        //result.result = user;
+                        console.log("payload::::::::::::::: ", payload);
+                        
+                        res.status(status).cookie('payload', JSON.stringify(payload)).cookie('token', token).send(result);
                     }else{
                         status = 401;
                         result.status = status;
                         result.error = 'Authentication Error';
+                        res.status(status).send(result);
                     }
-                    res.status(status).send(result);
+                    
                 }).catch(err => {
                     status = 500;
                     result.status = status;

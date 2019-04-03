@@ -9,7 +9,10 @@ const routes: Routes = [
 	{
 		path: '',
 		component: LandingComponent,
-		canActivate: [AuthGuard]
+		canActivate: [AuthGuard],
+		data: {
+			expectedRole: []
+		}
 	},
 	{
 		path: 'login',
@@ -18,6 +21,14 @@ const routes: Routes = [
 	{
 		path: 'register',
 		component: RegisterComponent
+	},
+	{
+		path: 'users',
+		loadChildren: './admin/admin.module#AdminModule',
+		canActivate: [AuthGuard],
+		data: {
+			expectedRole: ['admin']
+		}
 	}
 ];
 
