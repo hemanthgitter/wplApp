@@ -29,6 +29,14 @@ const routes: Routes = [
 		data: {
 			expectedRole: ['admin']
 		}
+	},
+	{
+		path: 'seller',
+		loadChildren: './seller/seller.module#SellerModule',
+		canActivate: [AuthGuard],
+		data: {
+			expectedRole: ['seller']
+		}
 	}
 ];
 

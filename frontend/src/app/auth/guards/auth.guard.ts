@@ -21,8 +21,8 @@ export class AuthGuard implements CanActivate {
 		const expectedRole = next.data.expectedRole;
 		if (currentUser) {
 			console.log('currentUser:::: ', currentUser);
-			if (currentUser['roles'][0] === expectedRole[0] || expectedRole.length === 0) {
-				return true;
+			for (let i = 0; currentUser['roles'].length; ++i) {
+				if (currentUser['roles'][i] === expectedRole[0] ||  expectedRole.length === 0 ) {return true; }
 			}
 		}
 		// not logged in so redirect to login page with the return url

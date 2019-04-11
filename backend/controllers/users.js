@@ -20,6 +20,7 @@ module.exports = {
             }
         })
             .then(([user, created]) => {
+                console.log("")
                 if (created) {
                     User_role.create({
                         user_id: user.id,
@@ -30,18 +31,25 @@ module.exports = {
                             let userRoles = [];
                             user.getRoles({ attributes: ["name"] }).then(
                                 roles => {
+                                    console.log("Roles :::::: ", roles);
                                     for (let i = 0; i < roles.length; ++i) {
+                                        console.log("Role name ::: ",  roles[i].get("name"));
                                         userRoles.push(roles[i].get("name"));
                                     }
+                                    result.result = {
+                                        firstName: user.firstName,
+                                        lastName: user.lastName,
+                                        email: user.email,
+                                        roles: userRoles,
+                                        message: message.registered_successfully
+                                    };
+                                    res.status(status).send(result);
                                 }
-                            );
-                            result.result = {
-                                firstName: user.firstName,
-                                lastName: user.lastName,
-                                email: user.email,
-                                roles: userRoles
-                            };
-                            res.status(status).send(result, {message: message.registered_successfully});
+                            ).catch(err => {
+                                user.destroy({ force: true });
+                                err.message = message.unknown_error;
+                                next(err);
+                            });
                         })
                         .catch(err => {
                             user.destroy({ force: true });

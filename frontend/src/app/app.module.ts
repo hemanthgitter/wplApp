@@ -3,7 +3,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { MatToolbarModule, MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, MatTableModule } from '@angular/material';
+// tslint:disable-next-line:max-line-length
+import { MatToolbarModule, MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, MatTableModule, MatSelectModule, MatMenuModule } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -38,7 +39,9 @@ import { CookieModule } from 'ngx-cookie';
 		MatFormFieldModule,
 		MatIconModule,
 		MatInputModule,
-		MatTableModule
+		MatTableModule,
+		MatSelectModule,
+		MatMenuModule
   ],
   providers: [
 		AuthService,
