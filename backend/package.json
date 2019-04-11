@@ -18,6 +18,9 @@
     "express": "^4.16.4",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.4.19",
-    "nodemon": "^1.18.10"
+    "mysql2": "^1.6.5",
+    "nodemailer": "^6.1.0",
+    "nodemon": "^1.18.10",
+    "sequelize": "^5.2.15"
   }
 }

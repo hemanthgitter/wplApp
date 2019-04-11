@@ -29,7 +29,11 @@ export class NavbarComponent implements OnInit {
 			this.currentUser = val;
 			this.admin = false;
 			if (this.currentUser) {
-				this.admin = this.currentUser['roles'][0] === 'admin';
+				this.currentUser['roles'].forEach(role => {
+					if (role === 'admin') {
+						this.admin = true;
+					}
+				});
 			}
 		});
 

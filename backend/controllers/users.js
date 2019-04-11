@@ -1,98 +1,144 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
-const User = require('../models/users');
+const User = require("../models").User;
+const User_role = require("../models").User_role;
+const message = require('../errorText').messages;
 
 module.exports = {
-    add: (req, res) => {
+    add: (req, res, next) => {
         let result = {};
         let status = 201;
-        const {firstName, lastName, email, password} = req.body;
-        const user = new User({firstName, lastName, email, password});
-
-        user.save((err, user) => {
-            if(!err){
-                result.status = status;
-                result.result = user;
-            }else{
-                status = 500;
-                result.status = status;
-                result.error = err;
+        const { firstName, lastName, email, password, roleId } = req.body;
+        User.findOrCreate({
+            where: { email: email },
+            defaults: {
+                firstName: firstName,
+                lastName: lastName,
+                password: password,
+                roleId: roleId
             }
-            res.status(status).send(result);
-        });
+        })
+            .then(([user, created]) => {
+                if (created) {
+                    User_role.create({
+                        user_id: user.id,
+                        role_id: user.roleId
+                    })
+                        .then(role => {
+                            result.status = status;
+                            let userRoles = [];
+                            user.getRoles({ attributes: ["name"] }).then(
+                                roles => {
+                                    for (let i = 0; i < roles.length; ++i) {
+                                        userRoles.push(roles[i].get("name"));
+                                    }
+                                }
+                            );
+                            result.result = {
+                                firstName: user.firstName,
+                                lastName: user.lastName,
+                                email: user.email,
+                                roles: userRoles
+                            };
+                            res.status(status).send(result, {message: message.registered_successfully});
+                        })
+                        .catch(err => {
+                            user.destroy({ force: true });
+                            err.message = message.unknown_error;
+                            next(err);
+                        });
+                } else {
+                    let err = new Error(message.emails_exists);
+                    err.statusCode = 400;
+                    next(err);
+                }
+            })
+            .catch(err => {
+                err.message = message.unknown_error;
+                next(err);
+            });
     },
 
-    login: (req, res) => {
+    login: (req, res, next) => {
         let result = {};
         let status = 200;
-        const {email, password} = req.body;
-        console.log("Email: ", email);
-        console.log("Password: ", password);
-        User.findOne({email}, (err, user) => {
-            if(!err && user){
-                bcrypt.compare(password, user.password).then(match => {
-                    if(match){
-                        let payload;
-                        if(user.email === 'admin@gmail.com'){
-                            payload = {"user": user.email,"roles":["admin"]};
-                        }else{
-                            payload = {"user": user.email,"roles":["user"]};
-                        }
-                        const options = { "expiresIn": "2d"};
-                        const secret = process.env.JWT_SECRET;
-                        const token = jwt.sign(payload, secret, options);
-
-                        //result.token = token;
-                        payload["firstName"] = user.firstName;
-                        payload["lastName"] = user.lastName;
-                        result.status = status;
-                        //result.result = user;
-                        console.log("payload::::::::::::::: ", payload);
-                        
-                        res.status(status).cookie('payload', JSON.stringify(payload)).cookie('token', token).send(result);
-                    }else{
-                        status = 401;
-                        result.status = status;
-                        result.error = 'Authentication Error';
-                        res.status(status).send(result);
+        const { email, password } = req.body;
+        User.findOne({ where: { email: email } }).then(user => {
+            if (user) {
+                let userRoles = [];
+                user.getRoles({ attributes: ["name"] }).then(roles => {
+                    for (let i = 0; i < roles.length; ++i) {
+                        userRoles.push(roles[i].get("name").toLowerCase());
                     }
-                    
-                }).catch(err => {
-                    status = 500;
-                    result.status = status;
-                    result.error = err;
-                    res.status(status).send(result);
-                })
-            }else{
-                status = 404;
-                result.status = status;
-                result.error = err;
+                });
+                bcrypt
+                    .compare(password, user.password)
+                    .then(match => {
+                        if (match) {
+                            let payload = { user: user.email, roles: userRoles};
+                            const options = { expiresIn: "1d" };
+                            const secret = process.env.JWT_SECRET;
+                            const token = jwt.sign(payload, secret, options);
+                            const maxAge = 60*60*24;
+
+                            payload["firstName"] = user.firstName;
+                            payload["lastName"] = user.lastName;
+                            result.status = status;
+                            result.message = message.login_success;
+
+                            res.status(status)
+                                .cookie("payload", JSON.stringify(payload), {maxAge: maxAge})
+                                .cookie("token", token, {httpOnly: true, maxAge: maxAge})
+                                .send(result);
+                        } else {
+                            let err = new Error(message.invalid_credentials);
+                            err.statusCode = 401;
+                            next(err);
+                        }
+                    })
+                    .catch(err => {
+                        err.message = message.unknown_error;
+                        next(err);
+                    });
+            } else {
+                err.message = message.user_not_found;
+                err.statusCode = 404;
+                next(err);
             }
+        })
+        .catch(err => {
+            err.message = message.unknown_error;
+            next(err);
         });
     },
 
-    getAll: (req, res) => {
+    getAll: (req, res, next) => {
         let result = {};
         let status = 200;
         const payload = req.decoded;
-        if(payload && payload.roles[0]==='admin'){
-            User.find({}, (err, users) => {
-                if(!err){
+        let role = "";
+        if (payload) {
+            for(let i=0; i<payload.roles.length; ++i){
+                if(payload.roles[i] === "admin"){
+                    role = "admin";
+                    break;
+                }
+            }
+            if(role && role==="admin"){
+                User.findAll().then(users => {
                     result.status = status;
                     result.result = users;
-                }else{
-                    status = 500;
-                    result.status = status;
-                    result.error = err;
-                }
-                res.status(status).send(result);
-            });
-        }else{
-            status = 401;
-            result.status = status;
-            result.error = `Authentication error`;
-            res.status(status).send(result);
+                    res.status(status).send(result);
+                });
+            }else{
+                let err = new Error(message.unauthorized);
+                next(err);
+            }
+        } else {
+            let err = new Error(message.token_expired);
+            err.statusCode = 401;
+            next(err);
         }
     }
-}
+};
