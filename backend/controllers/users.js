@@ -15,8 +15,7 @@ module.exports = {
             defaults: {
                 firstName: firstName,
                 lastName: lastName,
-                password: password,
-                roleId: roleId
+                password: password
             }
         })
             .then(([user, created]) => {
@@ -24,7 +23,7 @@ module.exports = {
                 if (created) {
                     User_role.create({
                         user_id: user.id,
-                        role_id: user.roleId
+                        role_id: roleId || 2
                     })
                         .then(role => {
                             result.status = status;
@@ -85,10 +84,11 @@ module.exports = {
                     .then(match => {
                         if (match) {
                             let payload = { user: user.email, roles: userRoles};
+                            console.log("UserRoles :: ", userRoles);
                             const options = { expiresIn: "1d" };
                             const secret = process.env.JWT_SECRET;
                             const token = jwt.sign(payload, secret, options);
-                            const maxAge = 60*60*24;
+                            const maxAge = 60*60*24*1000;
 
                             payload["firstName"] = user.firstName;
                             payload["lastName"] = user.lastName;

@@ -15,10 +15,9 @@ export class NavbarComponent implements OnInit {
 	private loginRoute = '/login';
 	private registerRoute = '/register';
 	private logoutRoute = '/logout';
-	private getAllUsersforAdmin = '/users/users-list';
 
 	currentUser: User;
-	admin = false;
+	menuItems: any = [];
 
 	constructor(
 		private auth: AuthService,
@@ -29,13 +28,12 @@ export class NavbarComponent implements OnInit {
 	ngOnInit() {
 		this.auth.currentUser.subscribe(val => {
 			this.currentUser = val;
-			this.admin = false;
 			if (this.currentUser) {
-				this.currentUser['roles'].forEach(role => {
-					if (role === 'admin') {
-						this.admin = true;
+				this.menuService.fetchMenuItems().subscribe(
+					data => {
+						this.menuItems = data.menu;
 					}
-				});
+				);
 			}
 		});
 

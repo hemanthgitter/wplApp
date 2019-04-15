@@ -23,7 +23,7 @@ const routes: Routes = [
 		component: RegisterComponent
 	},
 	{
-		path: 'users',
+		path: 'admin',
 		loadChildren: './admin/admin.module#AdminModule',
 		canActivate: [AuthGuard],
 		data: {

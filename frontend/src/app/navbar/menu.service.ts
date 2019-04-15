@@ -11,11 +11,8 @@ export class MenuService {
 	private http: HttpClient
   ) { }
 
-  fetchMenuItems(userId: Number) {
-	return this.http.post<any>(`http://localhost:3000/api/v1/menu`, { userId }, {withCredentials: true})
-			.pipe(map(menu => {
-
-				return menu;
-			}));
+  fetchMenuItems() {
+	return this.http.post<any>(`http://localhost:3000/api/v1/menu`, {}, {withCredentials: true})
+	.pipe(map(res => res));
   }
 }

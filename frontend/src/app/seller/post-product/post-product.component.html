@@ -1,3 +1,42 @@
-<p>
-  post-product works!
-</p>
+<mat-grid-list cols="4" class="productWrapper">
+	<h1>Post a product</h1>
+	<form [formGroup]="postProductForm" id="postProductForm" (ngSubmit)='productSubmit()'>
+		<mat-grid-tile [colspan]="1" [rowspan]="1" class="leftWrapper">
+			<mat-card class="image" [ngStyle]="{ 'background-image': 'url(' + imgURL + ')'}">
+				<label for="image-input" id="uploadLabel">
+					<mat-icon id="uploadIcon">cloud_upload</mat-icon>
+				</label>
+				<input #file id="image-input" type="file" accept='image/*' (change)="preview($event)" />
+			</mat-card>
+		</mat-grid-tile>
+		<mat-grid-tile [colspan]="3" [rowspan]="1">
+			<div class="rightWrapper">
+				<mat-form-field>
+					<input matInput placeholder="Enter a name for product" formControlName="title">
+				</mat-form-field>
+				<app-control-messages [control]="postProductForm.controls.title" class="controlMessage"></app-control-messages>
+				<mat-form-field>
+					<textarea matInput placeholder="Enter a description for the product" formControlName="description"></textarea>
+				</mat-form-field>
+				<app-control-messages [control]="postProductForm.controls.description" class="controlMessage"></app-control-messages>
+				<mat-form-field>
+					<input matInput placeholder="Stock quantity" type="number" formControlName="stock">
+				</mat-form-field>
+				<app-control-messages [control]="postProductForm.controls.stock" class="controlMessage"></app-control-messages>
+				<mat-form-field>
+						<input matInput type="number" name="price" placeholder="Price" formControlName="price">
+						<span matPrefix>$&nbsp;</span>
+    					<span matSuffix>.00</span>
+				</mat-form-field>
+				<mat-form-field>
+					<mat-label>Categories</mat-label>
+					<select matNativeControl required formControlName="category">
+						<option value="{{category.id}}" *ngFor="let category of categories">{{category.name}}</option>
+					</select>
+				</mat-form-field>
+				<app-control-messages [control]="postProductForm.controls.price" class="controlMessage"></app-control-messages>
+				<button mat-stroked-button color="primary" type="submit" id="productSubmit" [disabled]="!postProductForm.valid">Post product</button>
+			</div>
+		</mat-grid-tile>
+	</form>
+</mat-grid-list>

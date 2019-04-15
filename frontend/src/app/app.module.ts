@@ -11,7 +11,7 @@ import { LoginComponent } from './login/login.component';
 import { LandingComponent } from './landing/landing.component';
 import { RegisterComponent } from './register/register.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { ControlMessagesComponent } from './control-messages/control-messages.component';
+import { SharedModule } from './shared/shared.module';
 
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/guards/auth.guard';
@@ -24,8 +24,7 @@ import { CookieModule } from 'ngx-cookie';
 		LoginComponent,
 		LandingComponent,
 		RegisterComponent,
-		NavbarComponent,
-		ControlMessagesComponent
+		NavbarComponent
   ],
   imports: [
 		BrowserModule,
@@ -41,7 +40,10 @@ import { CookieModule } from 'ngx-cookie';
 		MatInputModule,
 		MatTableModule,
 		MatSelectModule,
-		MatMenuModule
+		MatMenuModule,
+		SharedModule
+  ],
+  exports: [
   ],
   providers: [
 		AuthService,

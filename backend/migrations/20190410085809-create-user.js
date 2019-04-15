@@ -28,10 +28,6 @@ module.exports = {
                 allowNull: false,
                 required: true
             },
-            roleId: {
-                type: Sequelize.INTEGER,
-                defaultValue: 2
-            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE
