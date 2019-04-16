@@ -1,7 +1,17 @@
 .sidenav-container{
 	padding: 1em;
 	#sidenav{
+		display: flex;
+		justify-content: center;
+		align-items: center;
 		min-width: 15%;
+		#sidenav-cat{
+			text-align: center;
+		}
+		.pretty{
+			display: block;
+			margin: 1em;
+		}
 	}
 	.sidenav-content{
 		margin-left: 20% !important;

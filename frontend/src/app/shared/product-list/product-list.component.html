@@ -1,7 +1,24 @@
 <mat-sidenav-container class="sidenav-container">
-	<mat-sidenav #sidenav mode="side" opened id="sidenav">Sidenav Container
+	<mat-sidenav #sidenav mode="side" opened id="sidenav">
+			<form [formGroup]="categoriesForm">
+				<div id="sidenav-cat">
+					<h3>Filter by Categories</h3>
+				</div>
+				<div *ngFor="let data of categories" class="pretty p-icon p-smooth">
+					<input type="checkbox" (change)="onChange(data.id, $event.target.checked)">
+					<div class="state p-success">
+						<i class="icon fa fa-check"></i>
+						<label>{{data.name}}</label>
+					</div>
+				</div>
+			</form>
 	</mat-sidenav>
 	<mat-sidenav-content class="sidenav-content">
+		<mat-progress-spinner *ngIf="loading"
+			class="example-margin"
+			color="primary"
+			mode="indeterminate">
+		</mat-progress-spinner>
 		<mat-card class="product-card" *ngFor="let product of products">
 			<mat-grid-list cols="6" rowHeight="100px">
 				<mat-grid-tile [colspan]="1" [rowspan]="2">
