@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 
 // tslint:disable-next-line:max-line-length
-import { MatToolbarModule, MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, MatTableModule, MatSelectModule, MatMenuModule } from '@angular/material';
+import { MatToolbarModule, MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, MatTableModule, MatSelectModule, MatMenuModule, MatChipsModule } from '@angular/material';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -41,7 +41,8 @@ import { CookieModule } from 'ngx-cookie';
 		MatTableModule,
 		MatSelectModule,
 		MatMenuModule,
-		SharedModule
+		SharedModule,
+		MatChipsModule
   ],
   exports: [
   ],

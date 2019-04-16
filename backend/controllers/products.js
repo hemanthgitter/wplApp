@@ -59,8 +59,20 @@ module.exports = {
         let status = 200;
         const payload = req.decoded;
         if (payload) {
-            Product.findAll().then(products => {
+            Product.findAll(
+                {
+                    include: [{
+                        model: Category,
+                        attributes: ['name']
+                    }]
+                }
+            ).then(products => {
                 result.status = status;
+                for(let i=0; i<products.length; ++i){
+                    const buffer = products[i].image;
+                    products[i]['category'] = products[i].Categories[0].name;
+                    products[i].image = buffer.toString();
+                }
                 result.result = products;
                 res.status(status).send(result);
             });

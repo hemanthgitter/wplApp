@@ -1,0 +1,41 @@
+<mat-sidenav-container class="sidenav-container">
+	<mat-sidenav #sidenav mode="side" opened id="sidenav">Sidenav Container
+	</mat-sidenav>
+	<mat-sidenav-content class="sidenav-content">
+		<mat-card class="product-card" *ngFor="let product of products">
+			<mat-grid-list cols="6" rowHeight="100px">
+				<mat-grid-tile [colspan]="1" [rowspan]="2">
+					<img mat-card-image class="product-image" src="{{product.image}}" alt="product image">
+				</mat-grid-tile>
+				<mat-grid-tile class="product-desc-wrapper" [colspan]="3" [rowspan]="2">
+					<mat-card-content>
+						<p>
+							<span class="product-headers">{{product.title}}</span>
+						</p>
+						<div class="product-desc">
+						<p>
+							<span class="product-headers">Description:</span> {{product.description}}
+						</p>
+					</div>
+					</mat-card-content>
+				</mat-grid-tile>
+				<mat-grid-tile [colspan]="2" [rowspan]="2">
+					<mat-card-content>
+						<p>
+							<span class="product-headers">Quantity:</span> {{product.stock}}
+						</p>
+						<p>
+							<span class="product-headers">Price:</span> {{product.price}} $
+						</p>
+						<p>
+							<span class="product-headers">Category: </span> {{product.Categories[0].name}}
+						</p>
+						<p>
+							<button mat-raised-button color="primary">Add to Cart</button>
+						</p>
+					</mat-card-content>
+				</mat-grid-tile>
+			</mat-grid-list>
+		</mat-card>
+	</mat-sidenav-content>
+</mat-sidenav-container>

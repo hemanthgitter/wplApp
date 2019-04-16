@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { PostProductComponent } from './post-product/post-product.component';
+import { ProductListComponent } from './product-list/product-list.component';
 
 const routes: Routes = [
   {
-	path: 'post-product',
-	component: PostProductComponent
+	path: 'all',
+	component: ProductListComponent
   }
 ];
 
@@ -13,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class SellerRoutingModule {}
+export class SharedRoutingModule {}

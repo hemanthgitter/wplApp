@@ -1,6 +1,9 @@
 <div id="registerFormWrapper">
   	<h1>Register</h1>
-	<form [formGroup]="registerForm" id="registerForm">
+	<form [formGroup]="registerForm" id="registerForm" (ngSubmit)="registerSubmit()">
+		<mat-chip-list *ngIf="message">
+			<mat-chip color="warn" selected>{{message}}</mat-chip>
+		</mat-chip-list>
 		<mat-form-field class="registerField">
 			<input matInput placeholder="First Name" formControlName="firstName">
 		</mat-form-field>

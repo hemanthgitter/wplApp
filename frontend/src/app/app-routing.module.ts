@@ -37,6 +37,14 @@ const routes: Routes = [
 		data: {
 			expectedRole: ['seller']
 		}
+	},
+	{
+		path: 'products',
+		loadChildren: './shared/shared.module#SharedModule',
+		canActivate: [AuthGuard],
+		data: {
+			expectedRole: []
+		}
 	}
 ];
 

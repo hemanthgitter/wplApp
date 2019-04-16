@@ -46,7 +46,6 @@ export class AuthService {
 				// login successful if there's a jwt token in the response
 				console.log(JSON.parse(this._cookieService.get('payload')));
 				const payload = this.getCookie('payload');
-				// console.log('payload:: ', payload['user']);
 				if (payload) {
 					console.log('localStorage');
 					// store user details and jwt token in local storage to keep user logged in between page refreshes
@@ -55,6 +54,14 @@ export class AuthService {
 				}
 
 				return payload;
+			}));
+	}
+
+	register(firstName: string, lastName: string, email: string, password: String, roleId: Number) {
+		// tslint:disable-next-line:max-line-length
+		return this.http.post<any>(`http://localhost:3000/api/v1/register`, { firstName, lastName, email, password, roleId }, {withCredentials: true})
+			.pipe(map(user => {
+				return user;
 			}));
 	}
 

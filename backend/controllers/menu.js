@@ -21,9 +21,9 @@ const sellerMenu = [
         "prefix": "seller"
     },
     {
-        "title": "List Products",
-        "path": "list-products",
-        "prefix": "seller"
+        "title": "Products List",
+        "path": "all",
+        "prefix": "products"
     }
 ];
 

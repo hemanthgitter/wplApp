@@ -1,0 +1,26 @@
+.sidenav-container{
+	padding: 1em;
+	#sidenav{
+		min-width: 15%;
+	}
+	.sidenav-content{
+		margin-left: 20% !important;
+		.product-card {
+			max-width: 70%;
+			margin: 1em;
+			.product-image{
+				max-width: 150px;
+			}
+			.product-desc-wrapper{
+				margin: 1em;
+				.product-desc{
+					text-overflow: ellipsis;
+				}
+			}
+			.product-headers {
+				font-weight: bold;
+				margin-right: 1em;
+			}
+		}
+	}
+}

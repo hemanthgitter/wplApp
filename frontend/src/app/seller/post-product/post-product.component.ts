@@ -3,6 +3,7 @@ import { Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { ValidationService } from '../../validation.service';
 import { SellerService } from '../seller.service';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-post-product',
@@ -12,7 +13,8 @@ import { SellerService } from '../seller.service';
 export class PostProductComponent implements OnInit {
 	constructor(
 		private fb: FormBuilder,
-		private sellerService: SellerService
+		private sellerService: SellerService,
+		private router: Router,
 	) { }
 
 	public image: File = null;

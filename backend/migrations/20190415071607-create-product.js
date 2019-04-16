@@ -36,7 +36,7 @@ module.exports = {
                     required: true
                 },
                 image: {
-                    type: Sequelize.BLOB,
+                    type: Sequelize.BLOB('long'),
                     allowNull: false,
                     required: true
                 },
