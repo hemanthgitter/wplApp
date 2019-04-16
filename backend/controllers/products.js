@@ -58,11 +58,18 @@ module.exports = {
         let result = {};
         let status = 200;
         const payload = req.decoded;
+        const category_id = req.body.id;
+        let where = {};
+        console.log("category_id ::::: ", category_id);
+        if(category_id && category_id.length>0){
+            where['id'] = category_id;
+        }
         if (payload) {
             Product.findAll(
                 {
                     include: [{
                         model: Category,
+                        where,
                         attributes: ['name']
                     }]
                 }

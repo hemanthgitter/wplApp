@@ -12,6 +12,8 @@ export class ProductListComponent implements OnInit {
 	categoriesForm: FormGroup;
 	categories: any[];
 	loading = false;
+	id = null;
+	noProducts = false;
 
 	constructor(
 		private sharedService: SharedService,
@@ -29,8 +31,14 @@ export class ProductListComponent implements OnInit {
 				this.categories = data.result;
 			}
 		);
-		this.sharedService.getAllProducts().subscribe(res => {
+
+		this.sharedService.getAllProducts(this.id).subscribe(res => {
 			this.products = res.result;
+			if (res.result.length === 0) {
+				this.noProducts = true;
+			} else {
+				this.noProducts = false;
+			}
 		});
 	}
 
@@ -43,6 +51,16 @@ export class ProductListComponent implements OnInit {
 			const index = selectedCategoriesArray.controls.findIndex(x => x.value === email);
 			selectedCategoriesArray.removeAt(index);
 		}
-		console.log('selectedCategoriesArray :: ', this.categoriesForm.value);
+		this.sharedService.getAllProducts(this.categoriesForm.value.selectedCategories).subscribe(res => {
+			this.products = res.result;
+			if (res.result.length === 0) {
+				this.noProducts = true;
+			} else {
+				this.noProducts = false;
+			}
+		});
+
+		console.log('selectedCategoriesArray :: ', this.categoriesForm.value.selectedCategories);
+
 	}
 }

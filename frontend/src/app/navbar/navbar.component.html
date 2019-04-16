@@ -1,30 +1,30 @@
 <div class="landingWrapper">
-  <mat-toolbar color="primary">
-    <mat-toolbar-row>
-      <div id="homeTxt">
-        <a id="homebtn" mat-flat-button color="primary" [routerLink]="homeRoute">Home</a>
-      </div>
-      <div *ngIf="currentUser">
-        <button mat-button [matMenuTriggerFor]="menu">Menu</button>
-        <mat-menu #menu="matMenu">
-          <button mat-menu-item *ngFor="let item of menuItems"
-            [routerLink]="[item.prefix,item.path]">{{item.title}}</button>
-        </mat-menu>
-      </div>
-      <div class="btnWrapper">
-        <ng-container *ngIf="!currentUser">
-          <button id="loginbtn" mat-flat-button color="primary" [routerLink]="loginRoute">
-            Login
-          </button>
-          <button id="registerbtn" mat-flat-button color="primary" [routerLink]="registerRoute">
-            Register
-          </button>
-        </ng-container>
+	<mat-toolbar color="primary">
+		<mat-toolbar-row>
+			<div id="homeTxt">
+				<a id="homebtn" mat-flat-button color="primary" [routerLink]="homeRoute">Home</a>
+			</div>
+			<div *ngIf="currentUser">
+				<button mat-button [matMenuTriggerFor]="menu">Menu</button>
+				<mat-menu #menu="matMenu">
+					<button mat-menu-item *ngFor="let item of menuItems"
+						[routerLink]="[item.prefix,item.path]">{{item.title}}</button>
+				</mat-menu>
+			</div>
+			<div class="btnWrapper">
+				<ng-container *ngIf="!currentUser">
+					<button id="loginbtn" mat-flat-button color="primary" [routerLink]="loginRoute">
+						Login
+					</button>
+					<button id="registerbtn" mat-flat-button color="primary" [routerLink]="registerRoute">
+						Register
+					</button>
+				</ng-container>
 
-        <button *ngIf="currentUser" id="registerbtn" mat-flat-button color="primary" (click)="logout()">
-          Logout
-        </button>
-      </div>
-    </mat-toolbar-row>
-  </mat-toolbar>
+				<button *ngIf="currentUser" id="registerbtn" mat-flat-button color="primary" (click)="logout()">
+					Logout
+				</button>
+			</div>
+		</mat-toolbar-row>
+	</mat-toolbar>
 </div>

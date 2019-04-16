@@ -74,6 +74,7 @@ export class PostProductComponent implements OnInit {
 			.subscribe(
 				data => {
 					console.log('Data :: ', data);
+					this.router.navigate(['products', 'product', data.id]);
 				},
 				error => {
 					console.log('Error - Unable to save the product');
