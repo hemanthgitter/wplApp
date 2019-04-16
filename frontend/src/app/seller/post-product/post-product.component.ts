@@ -29,13 +29,12 @@ export class PostProductComponent implements OnInit {
 		stock: ['', [Validators.required]],
 		price: ['', [Validators.required]],
 		category: [this.categories, [Validators.required]]
-	  });
+	});
 
 	ngOnInit() {
 		this.sellerService.fetchCategories().subscribe(
 			data => {
 				this.categories = data.result;
-				console.log('Categories:::: ', this.categories);
 			}
 		);
 	}
@@ -74,7 +73,7 @@ export class PostProductComponent implements OnInit {
 		)
 			.subscribe(
 				data => {
-					console.log(data);
+					console.log('Data :: ', data);
 				},
 				error => {
 					console.log('Error - Unable to save the product');

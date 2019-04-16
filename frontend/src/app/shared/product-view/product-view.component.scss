@@ -1,0 +1,43 @@
+.productWrapper{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    .leftWrapper{
+        flex-direction: column;
+        margin: 3em;
+        .image{
+            display: flex;
+            min-height: 300px;
+            min-width: 300px;
+            background-repeat: no-repeat;
+            background-size: contain;
+            .mat-card-image{
+                max-height: 150px;
+                max-width: 150px;
+                overflow: auto;
+            }
+            justify-content: center;
+            align-content: center;
+            #uploadLabel{
+                align-self: center;
+                #uploadIcon{
+                    cursor: pointer;
+                }
+            }
+            #image-input{
+                display: none;
+            }
+        }
+    }
+    .rightWrapper{
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        text-align: justify;
+        .product-headers {
+            font-weight: bold;
+            margin-right: 1em;
+        }
+    }
+}

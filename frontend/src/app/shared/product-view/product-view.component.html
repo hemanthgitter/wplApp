@@ -1,0 +1,32 @@
+<mat-grid-list cols="4" class="productWrapper" *ngIf="product">
+	<h1>{{product.title}}</h1>
+	<div>
+		<mat-grid-tile [colspan]="1" [rowspan]="1" class="leftWrapper">
+			<mat-card class="image" [ngStyle]="{ 'background-image': 'url(' + product.image + ')'}">
+			</mat-card>
+		</mat-grid-tile>
+		<mat-grid-tile [colspan]="3" [rowspan]="1">
+			<div class="rightWrapper">
+				<p>
+					<span class="product-headers">Description: </span>{{product.description}}
+				</p>
+				<p>
+					<mat-form-field>
+						<mat-label>Quantity</mat-label>
+						<select matNativeControl required>
+							<option value="{{qty}}" *ngFor="let qty of quantity">{{qty}}</option>
+						</select>
+					</mat-form-field>
+				</p>
+				<p>
+					<span class="product-headers">Price: </span>{{product.price}} $
+				</p>
+				<p>
+					<span class="product-headers">Category: </span>{{product.Categories[0].name}}
+				</p>
+				<button mat-stroked-button color="primary" type="button">Add to cart</button>
+				<button mat-stroked-button color="primary" type="button">Checkout</button>
+			</div>
+		</mat-grid-tile>
+	</div>
+</mat-grid-list>

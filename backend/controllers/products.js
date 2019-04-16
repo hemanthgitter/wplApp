@@ -83,6 +83,35 @@ module.exports = {
         }
     },
 
+    getProduct: (req, res, next) => {
+        let result = {};
+        let status = 200;
+        const payload = req.decoded;
+        console.log("req.params.id ::::::::::: ", req.params.id);
+        if (payload) {
+            Product.findOne(
+                {
+                    where: {id: req.params.id},
+                    include: [{
+                        model: Category,
+                        attributes: ['name']
+                    }]
+                }
+            ).then(product => {
+                console.log("Product :::::::::::: ", product);
+                result.status = status;
+                const buffer = product.image;
+                product.image = buffer.toString();
+                result.result = product;
+                res.status(status).send(result);
+            });
+        } else {
+            let err = new Error(message.token_expired);
+            err.statusCode = 401;
+            next(err);
+        }
+    },
+
     getAllCategories: (req, res, next) => {
         let result = {};
         let status = 200;

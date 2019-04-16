@@ -6,6 +6,8 @@ module.exports = (router) => {
         .post(validateToken, controller.saveProduct);
     router.route('/allProducts')
         .get(validateToken, controller.getAllProducts);
+    router.route('/product/:id')
+        .get(validateToken, controller.getProduct);
     router.route('/categories')
         .get(validateToken, controller.getAllCategories);
 }
