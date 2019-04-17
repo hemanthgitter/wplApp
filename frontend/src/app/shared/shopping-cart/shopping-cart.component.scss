@@ -1,0 +1,31 @@
+.sidenav-container {
+  padding: 1em;
+  .sidenav-content {
+    .product-card {
+      margin: 1em 15em;
+      .totalCart {
+        text-align: right;
+        margin-right: 2em;
+        #productPageRtn {
+          margin-right: 1em;
+        }
+      }
+      .product-image {
+        max-width: 150px;
+      }
+      .product-desc-wrapper {
+        margin: 1em;
+        .product-desc {
+          text-overflow: ellipsis;
+        }
+      }
+      .product-headers {
+        font-weight: bold;
+        margin-right: 1em;
+      }
+      .quantity{
+        margin-left: 1em;
+      }
+    }
+  }
+}

@@ -68,5 +68,7 @@ export class AuthService {
 	logout() {
 		this.deleteCookie('payload');
 		this.currentUserSubject.next(null);
+		localStorage.removeItem('shoppingCart');
+		console.log(JSON.parse(localStorage.getItem('shoppingCart')));
 	}
 }

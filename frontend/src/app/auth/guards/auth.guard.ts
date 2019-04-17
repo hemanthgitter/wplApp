@@ -33,6 +33,7 @@ export class AuthGuard implements CanActivate {
 	logout() {
 		console.log('Inside logout');
 		this.auth.logout();
+		localStorage.removeItem('shoppingCart');
 		this.router.navigate(['/login']);
 	}
 }

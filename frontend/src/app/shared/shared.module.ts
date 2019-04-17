@@ -7,9 +7,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 // tslint:disable-next-line:max-line-length
 import { MatCardModule, MatGridListModule, MatSidenavModule, MatButtonModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatIconModule, MatProgressSpinnerModule } from '@angular/material';
 import { ProductViewComponent } from './product-view/product-view.component';
+import { ShoppingCartComponent } from './shopping-cart/shopping-cart.component';
 
 @NgModule({
-	declarations: [ControlMessagesComponent, ProductListComponent, ProductViewComponent],
+	declarations: [ControlMessagesComponent, ProductListComponent, ProductViewComponent, ShoppingCartComponent],
 	// tslint:disable-next-line:max-line-length
 	imports: [CommonModule, SharedRoutingModule, MatCardModule, MatGridListModule, MatSidenavModule, MatButtonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatIconModule, MatProgressSpinnerModule],
 	exports: [ControlMessagesComponent]

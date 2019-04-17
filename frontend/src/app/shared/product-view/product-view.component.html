@@ -7,25 +7,28 @@
 		</mat-grid-tile>
 		<mat-grid-tile [colspan]="3" [rowspan]="1">
 			<div class="rightWrapper">
-				<p>
-					<span class="product-headers">Description: </span>{{product.description}}
-				</p>
-				<p>
-					<mat-form-field>
-						<mat-label>Quantity</mat-label>
-						<select matNativeControl required>
-							<option value="{{qty}}" *ngFor="let qty of quantity">{{qty}}</option>
-						</select>
-					</mat-form-field>
-				</p>
-				<p>
-					<span class="product-headers">Price: </span>{{product.price}} $
-				</p>
-				<p>
-					<span class="product-headers">Category: </span>{{product.Categories[0].name}}
-				</p>
-				<button mat-raised-button color="primary" type="button" id="addCartBtn">Add to cart</button>
-				<button mat-raised-button color="primary" type="button">Checkout</button>
+				<form [formGroup]="selectedQuantityForm" id="selectedQuantityForm" (ngSubmit)="addtoCart()">
+					<p>
+						<span class="product-headers">Description: </span>{{product.description}}
+					</p>
+					<p>
+						<mat-form-field>
+							<mat-label>Quantity</mat-label>
+							<mat-select formControlName='quantity' required>
+								<mat-option [value]="qty" *ngFor="let qty of quantityDropDown">{{qty}}</mat-option>
+							</mat-select>
+						</mat-form-field>
+					</p>
+					<p>
+						<span class="product-headers">Price: </span>{{product.price}} $
+					</p>
+					<p>
+						<span class="product-headers">Category: </span>{{product.Categories[0].name}}
+					</p>
+					<button mat-raised-button color="primary" type="submit" id="addCartBtn" [disabled]="!selectedQuantityForm.valid">Add to cart</button>
+					<button mat-raised-button color="primary" type="button"
+						[routerLink]="['../../','shoppingCart']">Shopping Cart</button>
+				</form>
 			</div>
 		</mat-grid-tile>
 	</div>
