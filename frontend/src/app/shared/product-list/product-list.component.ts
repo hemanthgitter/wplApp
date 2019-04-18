@@ -67,7 +67,7 @@ export class ProductListComponent implements OnInit {
 			console.log('Search text : ', val);
 			this.searchValue = val;
 			const limit = this.pageSize;
-			const offset = this.pageIndex * limit;
+			const offset = 0;
 			this.getProducts(this.categoriesForm.value.selectedCategories, this.seller_id, limit, offset, this.searchValue);
 		});
 	}
@@ -104,6 +104,9 @@ export class ProductListComponent implements OnInit {
 	getProducts(selectedCategories, seller_id, limit, offset, searchValue) {
 		this.sharedService.getAllProducts(selectedCategories, seller_id, limit, offset, searchValue).subscribe(res => {
 			this.length = res.result.count;
+			if (this.length < this.pageSize) {
+				this.pageIndex = 0;
+			}
 			this.products = res.result.rows;
 			if (res.result.length === 0) {
 				this.noProducts = true;

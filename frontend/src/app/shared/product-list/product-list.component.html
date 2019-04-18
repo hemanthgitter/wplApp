@@ -70,7 +70,8 @@
 		</mat-card>
 
 		<mat-paginator [length]="length"
-              [pageSize]="pageSize"
+			  [pageSize]="pageSize"
+			  [pageIndex]="pageIndex"
               [pageSizeOptions]="pageSizeOptions"
               (page)="pageEvent($event)">
 		</mat-paginator>
