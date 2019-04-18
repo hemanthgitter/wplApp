@@ -10,12 +10,20 @@ import { AuthService } from '../../auth/auth.service';
 	styleUrls: ['./product-list.component.scss']
 })
 export class ProductListComponent implements OnInit {
+	// MatPaginator Inputs
+	length = 0;
+	pageSize = 2;
+	pageSizeOptions: number[] = [2, 5, 10, 25, 100];
+	pageIndex = 0;
+
+
 	categoriesForm: FormGroup;
 	categories: any[];
 	loading = false;
 	id = null;
 	noProducts = false;
 	role = '';
+	seller_id = null;
 
 	constructor(
 		private sharedService: SharedService,
@@ -40,18 +48,21 @@ export class ProductListComponent implements OnInit {
 				this.role = 'seller';
 			}
 		}
-		let seller_id = null;
 		if (this.role === 'seller') {
-			seller_id = this.auth.currentUserValue.id;
+			this.seller_id = this.auth.currentUserValue.id;
 		}
-		this.sharedService.getAllProducts(this.id, seller_id).subscribe(res => {
-			this.products = res.result;
-			if (res.result.length === 0) {
-				this.noProducts = true;
-			} else {
-				this.noProducts = false;
-			}
-		});
+		const limit = this.pageSize;
+		const offset = this.pageIndex * limit;
+		this.getProducts(this.id, this.seller_id, limit, offset);
+	}
+
+	pageEvent(event) {
+		this.pageSize = event.pageSize;
+		this.pageIndex = event.pageIndex;
+		const limit = this.pageSize;
+		const offset = this.pageIndex * limit;
+		console.log('event :: ', event);
+		this.getProducts(this.id, this.seller_id, limit, offset);
 	}
 
 	onChange(email: string, isChecked: boolean) {
@@ -67,16 +78,22 @@ export class ProductListComponent implements OnInit {
 		if (this.role === 'seller') {
 			seller_id = this.auth.currentUserValue.id;
 		}
-		this.sharedService.getAllProducts(this.categoriesForm.value.selectedCategories, seller_id).subscribe(res => {
-			this.products = res.result;
+		const limit = this.pageSize;
+		const offset = this.pageIndex * limit;
+		this.getProducts(this.categoriesForm.value.selectedCategories, seller_id, limit, offset);
+		console.log('selectedCategoriesArray :: ', this.categoriesForm.value.selectedCategories);
+
+	}
+
+	getProducts(selectedCategories, seller_id, limit, offset) {
+		this.sharedService.getAllProducts(this.categoriesForm.value.selectedCategories, seller_id, limit, offset).subscribe(res => {
+			this.length = res.result.count;
+			this.products = res.result.rows;
 			if (res.result.length === 0) {
 				this.noProducts = true;
 			} else {
 				this.noProducts = false;
 			}
 		});
-
-		console.log('selectedCategoriesArray :: ', this.categoriesForm.value.selectedCategories);
-
 	}
 }

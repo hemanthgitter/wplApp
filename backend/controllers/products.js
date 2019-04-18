@@ -138,6 +138,8 @@ module.exports = {
         const payload = req.decoded;
         const category_id = req.body.id;
         const seller_id = req.body.seller_id || null;
+        const limit = req.body.limit;
+        const offset = req.body.offset;
         let where = {} , where2 = {};
         console.log("category_id ::::: ", category_id);
         if (category_id && category_id.length > 0) {
@@ -147,7 +149,7 @@ module.exports = {
             where2["sellerId"] = seller_id;
         }
         if (payload) {
-            Product.findAll({
+            Product.findAndCountAll({
                 where: where2,
                 include: [
                     {
@@ -155,13 +157,15 @@ module.exports = {
                         where,
                         attributes: ["name"]
                     }
-                ]
+                ],
+                offset: offset,
+                limit: limit
             }).then(products => {
                 result.status = status;
-                for (let i = 0; i < products.length; ++i) {
-                    const buffer = products[i].image;
-                    products[i]["category"] = products[i].Categories[0].name;
-                    products[i].image = buffer.toString();
+                for (let i = 0; i < products.rows.length; ++i) {
+                    const buffer = products.rows[i].image;
+                    products.rows[i]["category"] = products.rows[i].Categories[0].name;
+                    products.rows[i].image = buffer.toString();
                 }
                 result.result = products;
                 res.status(status).send(result);

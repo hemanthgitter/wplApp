@@ -16,9 +16,9 @@ export class SharedService {
 		this.shoppingCart.next(data);
 	}
 
-	getAllProducts(id, seller_id) {
+	getAllProducts(id, seller_id, limit, offset) {
 		return this.http.post<any>(`http://localhost:3000/api/v1/allProducts`, {
-			id, seller_id
+			id, seller_id, limit, offset
 		}, {withCredentials: true});
 	}
 
