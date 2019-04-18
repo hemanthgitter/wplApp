@@ -28,6 +28,16 @@ const sellerMenu = [
 ];
 
 const userMenu = [
+    {
+        "title": "Products List",
+        "path": "all",
+        "prefix": "products"
+    },
+    {
+        "title": "Orders",
+        "path": "orderList",
+        "prefix": "products"
+    }
 ];
 
 module.exports = {

@@ -16,14 +16,28 @@ export class SharedService {
 		this.shoppingCart.next(data);
 	}
 
-	getAllProducts(id) {
+	getAllProducts(id, seller_id) {
 		return this.http.post<any>(`http://localhost:3000/api/v1/allProducts`, {
-			id
+			id, seller_id
 		}, {withCredentials: true});
 	}
 
 	getProduct(id: number) {
 		return this.http.get<any>(`http://localhost:3000/api/v1/product/${id}`, {
+			withCredentials: true
+		});
+	}
+
+	purchaseProducts(user_id: number, payment_type: string, totalamount: number, order_items: any[]) {
+		return this.http.post<any>(`http://localhost:3000/api/v1/purchase`, {
+			user_id, payment_type, totalamount, order_items
+		}, {
+			withCredentials: true
+		});
+	}
+
+	getOrderList(user_id: number) {
+		return this.http.get<any>(`http://localhost:3000/api/v1/order-list/${user_id}`, {
 			withCredentials: true
 		});
 	}

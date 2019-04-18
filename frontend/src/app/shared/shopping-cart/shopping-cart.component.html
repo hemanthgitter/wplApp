@@ -55,7 +55,7 @@
 				<p>Total Cart: {{totalCost}} $</p>
 				<button mat-raised-button color="primary" type="button" id="productPageRtn"
 					[routerLink]="['../','all']">Return to Products List Page</button>
-				<button mat-raised-button color="primary" type="button">Purchase</button>
+				<button mat-raised-button color="primary" type="button" (click)="purchaseProducts()">Purchase</button>
 			</mat-grid-list>
 		</mat-card>
 	</mat-sidenav-content>

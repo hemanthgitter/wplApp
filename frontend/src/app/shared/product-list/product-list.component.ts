@@ -2,6 +2,7 @@ import { SharedService } from './../shared.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { SellerService } from '../../seller/seller.service';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
 	selector: 'app-product-list',
@@ -14,11 +15,13 @@ export class ProductListComponent implements OnInit {
 	loading = false;
 	id = null;
 	noProducts = false;
+	role = '';
 
 	constructor(
 		private sharedService: SharedService,
 		private fb: FormBuilder,
-		private sellerService: SellerService
+		private sellerService: SellerService,
+		private auth: AuthService
 	) { }
 	products: [];
 
@@ -31,8 +34,17 @@ export class ProductListComponent implements OnInit {
 				this.categories = data.result;
 			}
 		);
-
-		this.sharedService.getAllProducts(this.id).subscribe(res => {
+		const currentUser = this.auth.currentUserValue;
+		for (let i = 0; i < currentUser['roles'].length; ++i) {
+			if (currentUser['roles'][i] === 'seller' ) {
+				this.role = 'seller';
+			}
+		}
+		let seller_id = null;
+		if (this.role === 'seller') {
+			seller_id = this.auth.currentUserValue.id;
+		}
+		this.sharedService.getAllProducts(this.id, seller_id).subscribe(res => {
 			this.products = res.result;
 			if (res.result.length === 0) {
 				this.noProducts = true;
@@ -51,7 +63,11 @@ export class ProductListComponent implements OnInit {
 			const index = selectedCategoriesArray.controls.findIndex(x => x.value === email);
 			selectedCategoriesArray.removeAt(index);
 		}
-		this.sharedService.getAllProducts(this.categoriesForm.value.selectedCategories).subscribe(res => {
+		let seller_id = null;
+		if (this.role === 'seller') {
+			seller_id = this.auth.currentUserValue.id;
+		}
+		this.sharedService.getAllProducts(this.categoriesForm.value.selectedCategories, seller_id).subscribe(res => {
 			this.products = res.result;
 			if (res.result.length === 0) {
 				this.noProducts = true;

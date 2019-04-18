@@ -32,6 +32,11 @@ module.exports = (sequelize, DataTypes) => {
 				type: DataTypes.BLOB('long'),
 				allowNull: false,
 				required: true
+			},
+			sellerId: {
+				type: DataTypes.INTEGER,
+				allowNull: false,
+				required: true
 			}
         },
         {
@@ -46,7 +51,14 @@ module.exports = (sequelize, DataTypes) => {
                 model: models.Product_category
             },
             foreignKey: "product_id"
-        });
+		});
+		
+		Product.belongsToMany(models.Order, { 
+			through: {
+			  model: models.Order_item,
+			},
+			foreignKey: 'product_id'
+		});
 	};
     return Product;
 };

@@ -4,6 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import { ValidationService } from '../../validation.service';
 import { SellerService } from '../seller.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
 	selector: 'app-post-product',
@@ -15,6 +16,7 @@ export class PostProductComponent implements OnInit {
 		private fb: FormBuilder,
 		private sellerService: SellerService,
 		private router: Router,
+		private auth: AuthService
 	) { }
 
 	public image: File = null;
@@ -69,7 +71,8 @@ export class PostProductComponent implements OnInit {
 			this.postProductForm.controls.price.value,
 			this.image.name,
 			this.imgURL,
-			this.postProductForm.controls.category.value
+			this.postProductForm.controls.category.value,
+			this.auth.currentUserValue.id
 		)
 			.subscribe(
 				data => {

@@ -1,0 +1,69 @@
+<mat-sidenav-container class="sidenav-container">
+	<mat-sidenav-content class="sidenav-content">
+		<mat-progress-spinner *ngIf="loading" class="example-margin" color="primary" mode="indeterminate">
+		</mat-progress-spinner>
+		<mat-card class="order-card" *ngFor="let order of orders">
+			<mat-grid-list cols="6" rowHeight="50px">
+				<mat-grid-tile [colspan]="3">
+					<p>
+						<span class="order-headers">Order Id: </span>{{order.order_id}}
+					</p>
+				</mat-grid-tile>
+				<mat-grid-tile [colspan]="3">
+					<p>
+						<span class="order-headers">Payment Typde: </span>{{order.payment_type}}
+					</p>
+				</mat-grid-tile>
+				<mat-grid-tile [colspan]="3">
+						<p>
+							<span class="order-headers">Purchase Date: </span>{{parseDateTime(order.createdAt)}}
+						</p>
+					</mat-grid-tile>
+					<mat-grid-tile [colspan]="3">
+						<p>
+							<span class="order-headers">Total Cost: </span>{{order.totalamount}} $
+						</p>
+					</mat-grid-tile>
+			</mat-grid-list>
+			<mat-card class="product-card" *ngFor="let product of order.Products">
+				<mat-grid-list cols="6" rowHeight="100px">
+					<mat-grid-tile [colspan]="1" [rowspan]="2">
+						<img mat-card-image class="product-image" src="{{product.image}}" alt="product image">
+					</mat-grid-tile>
+					<mat-grid-tile class="product-desc-wrapper" [colspan]="3" [rowspan]="2">
+						<mat-card-content>
+							<p>
+								<span class="product-headers">{{product.title}}</span>
+							</p>
+							<div class="product-desc">
+								<p>
+									<span class="product-headers">Description:</span> {{product.description}}
+								</p>
+							</div>
+						</mat-card-content>
+					</mat-grid-tile>
+					<mat-grid-tile [colspan]="2" [rowspan]="2">
+						<mat-card-content>
+							<p>
+								<span class="product-headers">Quantity:</span> {{product.Order_item.quantity}}
+							</p>
+							<p>
+								<span class="product-headers">Price:</span> {{product.Order_item.price}} $
+							</p>
+						</mat-card-content>
+					</mat-grid-tile>
+				</mat-grid-list>
+			</mat-card>
+		</mat-card>
+
+		<mat-card class="product-card" *ngIf="noProducts">
+			<mat-grid-list cols="6" rowHeight="100px">
+				<mat-grid-tile class="product-desc-wrapper" [colspan]="6" [rowspan]="2">
+					<mat-card-content>
+						<h3>No products</h3>
+					</mat-card-content>
+				</mat-grid-tile>
+			</mat-grid-list>
+		</mat-card>
+	</mat-sidenav-content>
+</mat-sidenav-container>

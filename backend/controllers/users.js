@@ -83,7 +83,7 @@ module.exports = {
                     .compare(password, user.password)
                     .then(match => {
                         if (match) {
-                            let payload = { user: user.email, roles: userRoles};
+                            let payload = { user: user.email, roles: userRoles, id: user.id};
                             console.log("UserRoles :: ", userRoles);
                             const options = { expiresIn: "1d" };
                             const secret = process.env.JWT_SECRET;

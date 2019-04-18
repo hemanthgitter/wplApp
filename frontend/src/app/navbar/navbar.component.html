@@ -20,7 +20,9 @@
 						Register
 					</button>
 				</ng-container>
-
+				<button *ngIf="currentUser" id="registerbtn" mat-flat-button color="primary" [routerLink]="['products','shoppingCart']">
+						Shopping Cart
+				</button>
 				<button *ngIf="currentUser" id="registerbtn" mat-flat-button color="primary" (click)="logout()">
 					Logout
 				</button>

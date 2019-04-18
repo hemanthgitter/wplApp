@@ -1,4 +1,4 @@
-<mat-grid-list cols="4" class="productWrapper" *ngIf="product">
+<mat-grid-list cols="4" class="productWrapper" *ngIf="product && !editProduct">
 	<h1>{{product.title}}</h1>
 	<div>
 		<mat-grid-tile [colspan]="1" [rowspan]="1" class="leftWrapper">
@@ -11,7 +11,10 @@
 					<p>
 						<span class="product-headers">Description: </span>{{product.description}}
 					</p>
-					<p>
+					<p *ngIf="role==='seller'">
+						<span class="product-headers">Description: </span>{{product.stock}}
+					</p>
+					<p *ngIf="role==='user'">
 						<mat-form-field>
 							<mat-label>Quantity</mat-label>
 							<mat-select formControlName='quantity' required>
@@ -25,11 +28,63 @@
 					<p>
 						<span class="product-headers">Category: </span>{{product.Categories[0].name}}
 					</p>
-					<button mat-raised-button color="primary" type="submit" id="addCartBtn" [disabled]="!selectedQuantityForm.valid">Add to cart</button>
-					<button mat-raised-button color="primary" type="button"
-						[routerLink]="['../../','shoppingCart']">Shopping Cart</button>
+					<div *ngIf="role==='user'">
+						<button mat-raised-button color="primary" type="submit" id="addCartBtn"
+							[disabled]="!selectedQuantityForm.valid">Add to cart</button>
+						<button mat-raised-button color="primary" type="button"
+							[routerLink]="['../../','shoppingCart']">Shopping Cart</button>
+					</div>
+					<div *ngIf="role==='seller'">
+						<button mat-raised-button color="primary" type="button" (click)="editproduct()" id="addCartBtn">Edit</button>
+						<button mat-raised-button color="primary" type="button" (click)="deleteproduct()" id="addCartBtn">Delete</button>
+					</div>
 				</form>
 			</div>
 		</mat-grid-tile>
 	</div>
+</mat-grid-list>
+
+
+<mat-grid-list cols="4" class="productWrapper" *ngIf="editProduct">
+	<h1>Post a product</h1>
+	<form [formGroup]="postProductForm" id="postProductForm" (ngSubmit)='productSubmit()'>
+		<mat-grid-tile [colspan]="1" [rowspan]="1" class="leftWrapper">
+			<mat-card class="image" [ngStyle]="{ 'background-image': 'url(' + imgURL + ')'}">
+				<label for="image-input" id="uploadLabel">
+					<mat-icon id="uploadIcon">cloud_upload</mat-icon>
+				</label>
+				<input #file id="image-input" type="file" accept='image/*' (change)="preview($event)" />
+			</mat-card>
+		</mat-grid-tile>
+		<mat-grid-tile [colspan]="3" [rowspan]="1">
+			<div class="rightWrapper">
+				<mat-form-field>
+					<input matInput placeholder="Enter a name for product" formControlName="title">
+				</mat-form-field>
+				<app-control-messages [control]="postProductForm.controls.title" class="controlMessage"></app-control-messages>
+				<mat-form-field>
+					<textarea matInput placeholder="Enter a description for the product" formControlName="description"></textarea>
+				</mat-form-field>
+				<app-control-messages [control]="postProductForm.controls.description" class="controlMessage"></app-control-messages>
+				<mat-form-field>
+					<input matInput placeholder="Stock quantity" type="number" formControlName="stock">
+				</mat-form-field>
+				<app-control-messages [control]="postProductForm.controls.stock" class="controlMessage"></app-control-messages>
+				<mat-form-field>
+						<input matInput type="number" name="price" placeholder="Price" formControlName="price">
+						<span matPrefix>$&nbsp;</span>
+						<span matSuffix>.00</span>
+				</mat-form-field>
+				<mat-form-field>
+					<mat-label>Categories</mat-label>
+					<select matNativeControl required formControlName="category">
+						<option value="{{category.id}}" *ngFor="let category of categories">{{category.name}}</option>
+					</select>
+				</mat-form-field>
+				<app-control-messages [control]="postProductForm.controls.price" class="controlMessage"></app-control-messages>
+				<button mat-raised-button color="primary" type="submit" class="productSubmit" [disabled]="!postProductForm.valid">Post product</button>
+				<button mat-raised-button color="primary" type="button" class="productSubmit" (click)="cancelEdit()">Cancel</button>
+			</div>
+		</mat-grid-tile>
+	</form>
 </mat-grid-list>

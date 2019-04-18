@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SharedService } from './../shared.service';
 import { FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
+import { AuthService } from '../../auth/auth.service';
 
 @Component({
 	selector: 'app-shopping-cart',
@@ -12,7 +13,8 @@ export class ShoppingCartComponent implements OnInit {
 
 	constructor(
 		private sharedService: SharedService,
-		private fb: FormBuilder
+		private fb: FormBuilder,
+		private auth: AuthService
 	) { }
 
 	Arr = Array;
@@ -63,4 +65,21 @@ export class ShoppingCartComponent implements OnInit {
 		localStorage.setItem('shoppingCart', JSON.stringify(this.products));
 	}
 
+
+	purchaseProducts() {
+		const shoppingCartList = [];
+		for (let i = 0; i < this.products.length; ++i) {
+			const product = {};
+			product['product_id'] = this.products[i].id;
+			product['quantity'] = this.products[i].quantitySelected;
+			product['price'] = this.products[i].price;
+			shoppingCartList.push(product);
+		}
+		console.log('shoppingCartList ::', shoppingCartList);
+		const payment_type = 'web';
+		console.log('this.auth.currentUserValue :: ', this.auth.currentUserValue.id);
+		this.sharedService.purchaseProducts(this.auth.currentUserValue.id, payment_type, this.totalCost, shoppingCartList).subscribe( data => {
+			console.log('Purchase data:: ', data);
+		});
+	}
 }

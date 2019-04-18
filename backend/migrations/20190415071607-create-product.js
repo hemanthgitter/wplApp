@@ -40,6 +40,11 @@ module.exports = {
                     allowNull: false,
                     required: true
                 },
+                sellerId: {
+                    type: Sequelize.INTEGER,
+                    allowNull: false,
+                    required: true
+                },
                 createdAt: {
                     allowNull: false,
                     type: Sequelize.DATE
