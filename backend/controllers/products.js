@@ -2,6 +2,7 @@ const Product = require("../models").Product;
 const Product_category = require("../models").Product_category;
 const Category = require("../models").Category;
 const message = require("../errorText").messages;
+const Sequelize = require('sequelize');
 
 module.exports = {
     saveProduct: (req, res, next) => {
@@ -140,6 +141,8 @@ module.exports = {
         const seller_id = req.body.seller_id || null;
         const limit = req.body.limit;
         const offset = req.body.offset;
+        const searchValue = req.body.searchValue;
+        const Op = Sequelize.Op
         let where = {} , where2 = {};
         console.log("category_id ::::: ", category_id);
         if (category_id && category_id.length > 0) {
@@ -148,6 +151,10 @@ module.exports = {
         if(seller_id){
             where2["sellerId"] = seller_id;
         }
+        if(searchValue){
+            where2["title"] = { [Op.like]: '%'+searchValue+'%' };
+        }
+        console.log("where2:: ", where2);
         if (payload) {
             Product.findAndCountAll({
                 where: where2,

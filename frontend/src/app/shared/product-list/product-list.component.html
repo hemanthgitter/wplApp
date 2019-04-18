@@ -19,6 +19,10 @@
 			color="primary"
 			mode="indeterminate">
 		</mat-progress-spinner>
+		<label>
+			Name:
+		<input type="text" [formControl]="searchText">
+		</label>
 		<mat-card class="product-card" *ngFor="let product of products">
 			<mat-grid-list cols="6" rowHeight="100px">
 				<mat-grid-tile [colspan]="1" [rowspan]="2">

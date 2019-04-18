@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { SellerService } from '../../seller/seller.service';
 import { AuthService } from '../../auth/auth.service';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
 	selector: 'app-product-list',
@@ -16,6 +17,8 @@ export class ProductListComponent implements OnInit {
 	pageSizeOptions: number[] = [2, 5, 10, 25, 100];
 	pageIndex = 0;
 
+	searchValue = '';
+	searchText = new FormControl('');
 
 	categoriesForm: FormGroup;
 	categories: any[];
@@ -34,6 +37,7 @@ export class ProductListComponent implements OnInit {
 	products: [];
 
 	ngOnInit() {
+		this.searchTextChanges();
 		this.categoriesForm = this.fb.group({
 			selectedCategories: this.fb.array([])
 		});
@@ -53,7 +57,19 @@ export class ProductListComponent implements OnInit {
 		}
 		const limit = this.pageSize;
 		const offset = this.pageIndex * limit;
-		this.getProducts(this.id, this.seller_id, limit, offset);
+		this.getProducts(this.id, this.seller_id, limit, offset, this.searchValue);
+	}
+
+	searchTextChanges() {
+		this.searchText.valueChanges
+		.pipe(debounceTime(500))
+		.subscribe(val => {
+			console.log('Search text : ', val);
+			this.searchValue = val;
+			const limit = this.pageSize;
+			const offset = this.pageIndex * limit;
+			this.getProducts(this.categoriesForm.value.selectedCategories, this.seller_id, limit, offset, this.searchValue);
+		});
 	}
 
 	pageEvent(event) {
@@ -62,7 +78,7 @@ export class ProductListComponent implements OnInit {
 		const limit = this.pageSize;
 		const offset = this.pageIndex * limit;
 		console.log('event :: ', event);
-		this.getProducts(this.id, this.seller_id, limit, offset);
+		this.getProducts(this.id, this.seller_id, limit, offset, this.searchValue);
 	}
 
 	onChange(email: string, isChecked: boolean) {
@@ -80,13 +96,13 @@ export class ProductListComponent implements OnInit {
 		}
 		const limit = this.pageSize;
 		const offset = this.pageIndex * limit;
-		this.getProducts(this.categoriesForm.value.selectedCategories, seller_id, limit, offset);
+		this.getProducts(this.categoriesForm.value.selectedCategories, seller_id, limit, offset, this.searchValue);
 		console.log('selectedCategoriesArray :: ', this.categoriesForm.value.selectedCategories);
 
 	}
 
-	getProducts(selectedCategories, seller_id, limit, offset) {
-		this.sharedService.getAllProducts(this.categoriesForm.value.selectedCategories, seller_id, limit, offset).subscribe(res => {
+	getProducts(selectedCategories, seller_id, limit, offset, searchValue) {
+		this.sharedService.getAllProducts(selectedCategories, seller_id, limit, offset, searchValue).subscribe(res => {
 			this.length = res.result.count;
 			this.products = res.result.rows;
 			if (res.result.length === 0) {
