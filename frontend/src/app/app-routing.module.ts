@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from './auth/guards/auth.guard';
+import { ErrorComponent } from './error/error.component';
 
 const routes: Routes = [
 	{
@@ -42,6 +43,13 @@ const routes: Routes = [
 		path: 'products',
 		loadChildren: './shared/shared.module#SharedModule',
 		canActivate: [AuthGuard],
+		data: {
+			expectedRole: []
+		}
+	},
+	{
+		path: 'error',
+		component: ErrorComponent,
 		data: {
 			expectedRole: []
 		}

@@ -11,7 +11,7 @@
 					<p>
 						<span class="product-headers">Description: </span>{{product.description}}
 					</p>
-					<p *ngIf="role==='seller'">
+					<p *ngIf="role==='seller'  || role==='admin'">
 						<span class="product-headers">Description: </span>{{product.stock}}
 					</p>
 					<p *ngIf="role==='user'">
@@ -34,7 +34,7 @@
 						<button mat-raised-button color="primary" type="button"
 							[routerLink]="['../../','shoppingCart']">Shopping Cart</button>
 					</div>
-					<div *ngIf="role==='seller'">
+					<div *ngIf="role==='seller' || role==='admin'">
 						<button mat-raised-button color="primary" type="button" (click)="editproduct()" id="addCartBtn">Edit</button>
 						<button mat-raised-button color="primary" type="button" (click)="deleteproduct()" id="addCartBtn">Delete</button>
 					</div>

@@ -201,10 +201,15 @@ module.exports = {
             }).then(product => {
                 console.log("Product :::::::::::: ", product);
                 result.status = status;
-                const buffer = product.image;
-                product.image = buffer.toString();
-                result.result = product;
-                res.status(status).send(result);
+                if(product){
+                    const buffer = product.image;
+                    product.image = buffer.toString();
+                    result.result = product;
+                    res.status(status).send(result);
+                }else{
+                    result.result = null;
+                    res.status(status).send(result);
+                }
             });
         } else {
             let err = new Error(message.token_expired);

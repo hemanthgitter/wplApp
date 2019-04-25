@@ -18,6 +18,7 @@ export class NavbarComponent implements OnInit {
 
 	currentUser: User;
 	menuItems: any = [];
+	role = '';
 
 	constructor(
 		private auth: AuthService,
@@ -34,6 +35,10 @@ export class NavbarComponent implements OnInit {
 						this.menuItems = data.menu;
 					}
 				);
+				this.currentUser.roles.forEach(role => {
+					this.role = role;
+					console.log('this.role: ', this.role);
+				});
 			}
 		});
 

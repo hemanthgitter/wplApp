@@ -6,6 +6,7 @@ import { Validators } from '@angular/forms';
 import { AuthService } from '../../auth/auth.service';
 import { SellerService } from '../../seller/seller.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
 	selector: 'app-product-view',
@@ -44,7 +45,8 @@ export class ProductViewComponent implements OnInit {
 		private fb: FormBuilder,
 		private auth: AuthService,
 		private sellerService: SellerService,
-		private router: Router
+		private router: Router,
+		private snackBar: MatSnackBar
 	) { }
 
 	ngOnInit() {
@@ -66,11 +68,18 @@ export class ProductViewComponent implements OnInit {
 
 		this.id = +this.route.snapshot.paramMap.get('id');
 		this.sharedService.getProduct(this.id).subscribe(res => {
-			this.product = res.result;
-			if (this.product) {
-				for (let i = 1; i <= res.result.stock; ++i) {
-					this.quantityDropDown.push(i);
+			if (res.result) {
+				this.product = res.result;
+				console.log('Resss ', res.result);
+				if (this.product) {
+					console.log('Found');
+					for (let i = 1; i <= res.result.stock; ++i) {
+						this.quantityDropDown.push(i);
+					}
 				}
+			} else {
+				console.log('Not found');
+				this.router.navigate(['error']);
 			}
 		});
 	}
@@ -111,14 +120,17 @@ export class ProductViewComponent implements OnInit {
 				if (shoppingCart[i].id === this.product.id) {
 					shoppingCart[i] = this.product;
 					updatedShoppingCart = shoppingCart;
+					this.openSnackBar('Shopping cart updated successfully', null);
 					break;
 				}
 			}
 			if (i === shoppingCart.length) {
 				updatedShoppingCart = [...shoppingCart, this.product];
+				this.openSnackBar('Added to shopping cart', null);
 			}
 		} else {
 			updatedShoppingCart = [...shoppingCart, this.product];
+			this.openSnackBar('Added to shopping cart', null);
 		}
 		this.sharedService.shoppingCart.next(updatedShoppingCart);
 		localStorage.setItem('shoppingCart', JSON.stringify(updatedShoppingCart));
@@ -164,6 +176,7 @@ export class ProductViewComponent implements OnInit {
 					price: this.product.price,
 					category: this.categories
 				});
+				this.openSnackBar('Product updated successfully', null);
 			}
 		);
 	}
@@ -172,9 +185,16 @@ export class ProductViewComponent implements OnInit {
 		this.sellerService.deleteProduct(this.product.id).subscribe(
 			data => {
 				console.log(data);
+				this.openSnackBar('Product deleted successfully', null);
 				this.router.navigate(['products', 'all']);
 			}
 		);
+	}
+
+	openSnackBar(message: string, action: string) {
+		this.snackBar.open(message, action, {
+		  duration: 2000,
+		});
 	}
 
 	cancelEdit() {

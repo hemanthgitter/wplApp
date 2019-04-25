@@ -1,5 +1,5 @@
 <div id="registerFormWrapper">
-  	<h1>Register</h1>
+	<h1>Register</h1>
 	<form [formGroup]="registerForm" id="registerForm" (ngSubmit)="registerSubmit()">
 		<mat-chip-list *ngIf="message">
 			<mat-chip color="warn" selected>{{message}}</mat-chip>
@@ -26,10 +26,19 @@
 		<app-control-messages [control]="registerForm.controls.password" class="controlMessage"></app-control-messages>
 		<mat-form-field class="registerField">
 			<input matInput placeholder="Confirm Password" [type]="hide ? 'password' : 'text'"
-			formControlName="confirmPassword">
+				formControlName="confirmPassword">
 		</mat-form-field>
-		<app-control-messages [control]="registerForm.controls.confirmPassword" class="controlMessage"></app-control-messages>
+		<mat-form-field class="registerField">
+			<mat-label>Select Role</mat-label>
+			<mat-select formControlName="role">
+				<mat-option *ngFor="let role of roles" [value]="role.id">
+					{{role.name}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+		<app-control-messages [control]="registerForm.controls.confirmPassword" class="controlMessage">
+		</app-control-messages>
 		<button mat-stroked-button color="primary" type="submit" id="registerSubmit"
-		[disabled]="!registerForm.valid">Submit</button>
+			[disabled]="!registerForm.valid">Submit</button>
 	</form>
 </div>

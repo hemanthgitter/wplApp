@@ -59,7 +59,6 @@ export class ProductListComponent implements OnInit {
 		const offset = this.pageIndex * limit;
 		this.getProducts(this.id, this.seller_id, limit, offset, this.searchValue);
 	}
-
 	searchTextChanges() {
 		this.searchText.valueChanges
 		.pipe(debounceTime(500))

@@ -41,7 +41,7 @@ export class AuthService {
 	}
 
 	login(email: string, password: string) {
-		return this.http.post<any>(`http://localhost:3000/api/v1/login`, { email, password }, {withCredentials: true})
+		return this.http.post<any>(`http://localhost:3000/api/v1/login`, { email, password }, { withCredentials: true })
 			.pipe(map(user => {
 				// login successful if there's a jwt token in the response
 				console.log(JSON.parse(this._cookieService.get('payload')));
@@ -59,7 +59,7 @@ export class AuthService {
 
 	register(firstName: string, lastName: string, email: string, password: String, roleId: Number) {
 		// tslint:disable-next-line:max-line-length
-		return this.http.post<any>(`http://localhost:3000/api/v1/register`, { firstName, lastName, email, password, roleId }, {withCredentials: true})
+		return this.http.post<any>(`http://localhost:3000/api/v1/register`, { firstName, lastName, email, password, roleId }, { withCredentials: true })
 			.pipe(map(user => {
 				return user;
 			}));
@@ -70,5 +70,12 @@ export class AuthService {
 		this.currentUserSubject.next(null);
 		localStorage.removeItem('shoppingCart');
 		console.log(JSON.parse(localStorage.getItem('shoppingCart')));
+	}
+
+	getRoles() {
+		return this.http.get<any>(`http://localhost:3000/api/v1/roles`, { withCredentials: true })
+			.pipe(map(roles => {
+				return roles;
+			}));
 	}
 }

@@ -11,6 +11,11 @@ const adminMenu = [
         "title": "Users",
         "path": "users-list",
         "prefix": "admin"
+    },
+    {
+        "title": "Products List",
+        "path": "all",
+        "prefix": "products"
     }
 ];
 

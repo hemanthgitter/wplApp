@@ -18,6 +18,7 @@ import { AuthGuard } from './auth/guards/auth.guard';
 import { HttpClientModule } from '@angular/common/http';
 import { CookieModule } from 'ngx-cookie';
 import { FooterComponent } from './footer/footer.component';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { FooterComponent } from './footer/footer.component';
 		LandingComponent,
 		RegisterComponent,
 		NavbarComponent,
-		FooterComponent
+		FooterComponent,
+		ErrorComponent
   ],
   imports: [
 		BrowserModule,

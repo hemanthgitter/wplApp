@@ -3,6 +3,8 @@ import { SharedService } from './../shared.service';
 import { FormBuilder } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { AuthService } from '../../auth/auth.service';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
 	selector: 'app-shopping-cart',
@@ -14,7 +16,9 @@ export class ShoppingCartComponent implements OnInit {
 	constructor(
 		private sharedService: SharedService,
 		private fb: FormBuilder,
-		private auth: AuthService
+		private auth: AuthService,
+		private router: Router,
+		private snackBar: MatSnackBar
 	) { }
 
 	Arr = Array;
@@ -80,6 +84,21 @@ export class ShoppingCartComponent implements OnInit {
 		console.log('this.auth.currentUserValue :: ', this.auth.currentUserValue.id);
 		this.sharedService.purchaseProducts(this.auth.currentUserValue.id, payment_type, this.totalCost, shoppingCartList).subscribe( data => {
 			console.log('Purchase data:: ', data);
+			if (data.result && data.result.status && data.result.status === 201) {
+				this.openSnackBar(data.result.message, null);
+			} else {
+				this.products = [];
+				this.sharedService.shoppingCart.next(this.products);
+				localStorage.removeItem('shoppingCart');
+				this.openSnackBar('Purchase successful', null);
+				this.router.navigate(['orderList']);
+			}
+		});
+	}
+
+	openSnackBar(message: string, action: string) {
+		this.snackBar.open(message, action, {
+		  duration: 2000,
 		});
 	}
 }
