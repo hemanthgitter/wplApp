@@ -59,6 +59,7 @@ export class ProductListComponent implements OnInit {
 		const offset = this.pageIndex * limit;
 		this.getProducts(this.id, this.seller_id, limit, offset, this.searchValue);
 	}
+
 	searchTextChanges() {
 		this.searchText.valueChanges
 		.pipe(debounceTime(500))
@@ -69,6 +70,11 @@ export class ProductListComponent implements OnInit {
 			const offset = 0;
 			this.getProducts(this.categoriesForm.value.selectedCategories, this.seller_id, limit, offset, this.searchValue);
 		});
+	}
+
+	clearSearch() {
+		this.searchText.setValue('');
+		this.searchValue = '';
 	}
 
 	pageEvent(event) {
@@ -107,7 +113,7 @@ export class ProductListComponent implements OnInit {
 				this.pageIndex = 0;
 			}
 			this.products = res.result.rows;
-			if (res.result.length === 0) {
+			if (res.result.count === 0) {
 				this.noProducts = true;
 			} else {
 				this.noProducts = false;

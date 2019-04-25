@@ -38,6 +38,9 @@
 						<button mat-raised-button color="primary" type="button" (click)="editproduct()" id="addCartBtn">Edit</button>
 						<button mat-raised-button color="primary" type="button" (click)="deleteproduct()" id="addCartBtn">Delete</button>
 					</div>
+					<div>
+						<button mat-raised-button color="primary" type="button" [routerLink]="['../../','all']" id="">Return to product list</button>
+					</div>
 				</form>
 			</div>
 		</mat-grid-tile>

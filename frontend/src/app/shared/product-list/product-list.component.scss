@@ -1,5 +1,6 @@
 .sidenav-container{
 	padding: 1em;
+	height: 100%;
 	#sidenav{
 		display: flex;
 		justify-content: center;
@@ -15,6 +16,10 @@
 	}
 	.sidenav-content{
 		margin-left: 20% !important;
+		.search-box{
+			margin: 1em;
+			width: 20%;
+		}
 		.product-card {
 			max-width: 70%;
 			margin: 1em;

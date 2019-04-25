@@ -19,10 +19,12 @@
 			color="primary"
 			mode="indeterminate">
 		</mat-progress-spinner>
-		<label>
-			Name:
-		<input type="text" [formControl]="searchText">
-		</label>
+		<mat-form-field class="search-box">
+			<input matInput placeholder="Search Products" [formControl]="searchText">
+			<button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchValue" (click)="clearSearch()">
+				<mat-icon>close</mat-icon>
+			</button>
+		</mat-form-field>
 		<mat-card class="product-card" *ngFor="let product of products">
 			<mat-grid-list cols="6" rowHeight="100px">
 				<mat-grid-tile [colspan]="1" [rowspan]="2">
