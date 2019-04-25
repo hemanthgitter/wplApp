@@ -2,13 +2,24 @@
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 @import '~pretty-checkbox/src/pretty-checkbox.scss';
 
-head, body{
-    padding: 0;
-    margin: 0;
-}
-body{
-    min-height: 100%;
-}
-.mat-simple-snackbar{
-    justify-content: center !important;
+html{
+    height: 100%;
+    head, body{
+        padding: 0;
+        margin: 0;
+        height: 100%;
+    }
+    body{
+        min-height: 100%;
+        display: flex;
+        flex-flow: column;
+        app-root{
+            height: 100%;
+            display: flex;
+            flex-flow: column;
+        }
+    }
+    .mat-simple-snackbar{
+        justify-content: center !important;
+    }
 }
