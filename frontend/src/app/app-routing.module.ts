@@ -48,7 +48,7 @@ const routes: Routes = [
 		}
 	},
 	{
-		path: 'error',
+		path: '**',
 		component: ErrorComponent,
 		data: {
 			expectedRole: []
